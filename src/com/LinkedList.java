@@ -70,8 +70,27 @@ public class LinkedList {
     }
 	
 	
+    public void append(String data) {
+    	
+    	Node newNode = new  Node(data);
+    	
+    	newNode.setNext(null);
+    	
+    	if (head == null) {
+    		head = newNode;
+    		return;
+    	}
+    	
+    	Node tail=head;
+    	
+    	while (tail.getNext() !=null) {
+    		tail=tail.getNext();
+    	}
+    	tail.setNext(newNode);
+    }
+    
 	/**
-	 * 
+	 * Function to print list 
 	 */
 	public void printList() {
 		Node newNode=head;
@@ -135,6 +154,37 @@ public class LinkedList {
 		
 	}
 	
+	public void deleteNode(String data) {
+	
+		if (head == null) {
+			return;
+		}
+		
+		if(head.getData().equals(data) && head.getNext() != null) {
+			head=head.getNext();
+		}
+		
+		if(head.getData().equals(data) && head.getNext() == null) {
+			System.out.println("This is the last node in list, hence cannot delete this node.");
+		}
+		
+		Node start =head;
+		
+    	while (start.getNext() !=null) {
+    		if (start.getNext().getData().equals(data)) {
+    			start.setNext(start.getNext().getNext());
+    		}
+			if (start.getNext() == null) {
+				return;
+			}
+			else {
+				start=start.getNext();	
+			}
+    		
+    	}	
+    	return;
+	}
+	
     /* Returns count of nodes in linked list */
     public int getCountRec(Node node)
     {
@@ -191,11 +241,13 @@ public class LinkedList {
 	/*Function to display options of application*/
 	public int displayOptions() {
 		System.out.println("List of functionalities:");
-		System.out.println("1. Push Node");
-		System.out.println("2. Insert After");
-		System.out.println("3. Get Count in List");
-		System.out.println("4. Rotate List by k places");
-		System.out.println("5. Print List");
+		System.out.println("1. Push Node [Head]");
+		System.out.println("2. Append Node [Tail]");
+		System.out.println("3. Insert After");
+		System.out.println("4. Get Count in List");
+		System.out.println("5. Rotate List by k places");
+		System.out.println("6. Delete Node");
+		System.out.println("7. Print List");
 		System.out.println("0. Exit");
 		System.out.println("Choose option to execute function:");
 		return intParam();
@@ -206,10 +258,12 @@ public class LinkedList {
 		int option = displayOptions();
 		switch (option) {
 			case 1:   casePushData();
-			case 2:   caseinsertAfter();
-			case 3:   casegetListCount();
-			case 4:   caseRotateRight();
-			case 5:   caseprintList();
+			case 2:   caseAppend();
+			case 3:   caseinsertAfter();
+			case 4:   casegetListCount();
+			case 5:   caseRotateRight();
+			case 6:   casedeleteNode();
+			case 7:   caseprintList();
 			case 0:   System.out.println("Exiting");
 					  break;	
 			default:  System.out.println("Invalid option chosen.Please choose a valid option.");;
@@ -235,6 +289,22 @@ public class LinkedList {
 		}	
 	}
 	
+	public void caseAppend() {
+		System.out.println("Enter String data to be inserted in node. This node will be tail.");
+		String data=strigParam();
+		append(data);
+		System.out.println("Data pushed successfully.Choose below mentioned option to proceed.");
+		System.out.println("1. Append Another Node");
+		System.out.println("2. Go to main Menu");
+		int opt=intParam();
+		if (opt == 1) {
+		  caseAppend();
+		}
+		else {		
+		  casefunction();
+		}			
+	}
+	
 	public void caseinsertAfter() {
 		System.out.println("Orignal List:");
 		printList();
@@ -257,7 +327,7 @@ public class LinkedList {
 	}
 	
 	public void casegetListCount() {
-		System.out.println(getCount());
+		System.out.println("Current List Count: "+getCount());
 		System.out.println("1. Repeat the task: Get List Count");
 		System.out.println("2. Go to main Menu");
         int opt=intParam();
@@ -286,6 +356,26 @@ public class LinkedList {
 		else {
 			casefunction();
 		}		
+	}
+	
+	public void casedeleteNode() {
+		System.out.println("Orignal List:");
+		printList();		
+        System.out.println("Enter data which needs to be deleted");
+        String newdata=strigParam();
+        deleteNode(newdata);
+		System.out.println("Updated List:");
+		printList();
+		System.out.println("1. Repeat the task: Delete Node");
+		System.out.println("2. Go to main Menu");
+        int opt=intParam();
+		if (opt == 1) {
+			casedeleteNode();
+		}
+		else {
+			casefunction();
+		}		       
+		
 	}
 	
 	public void caseprintList() {
