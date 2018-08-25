@@ -5,15 +5,38 @@ import java.util.Scanner;
 
 /**
  * @author avisharma
- *This Class is class for customized linked list
+ * 
+ * This Class is class for customized linked list
  */
 public class LinkedList {
-
-	Node head;
 	
+	/*
+	 * Class level params
+	 */
+	Node head;
 	final static String os = System.getProperty("os.name");
 	
 	
+	
+	/**
+	 * Constructor with elements option
+	 * 
+	 * @param elements
+	 */
+	public LinkedList(String[] elements){
+		head = null;
+		for(String element:elements){
+			push(element);
+		}
+	}
+	
+	/**
+	 * Constructor for creating empty object
+	 */
+	public LinkedList(){
+		head = null;
+	}
+
 	/*Function to rotate list by k places */
 	public void rotateList(int k) {
 		
@@ -68,6 +91,17 @@ public class LinkedList {
         /*Move the head to point to new Node */
         head = new_node;
     }
+    
+	/**
+	 * Inserts all Node at front of the list.
+	 *  
+	 * @param elements
+	 */
+	private void pushAll(String[] elements) {
+		for(String element:elements){
+			push(element);
+		}
+	}
 	
 	
     public void append(String data) {
@@ -105,10 +139,13 @@ public class LinkedList {
 		{
 				String data = newNode.getData();
 				nodeData[j]= data;
-				System.out.print(nodeData[j] + "-->");		
+				System.out.print(nodeData[j]);
 				newNode=newNode.getNext();
+				
+				if(j<nodeData.length-1) System.out.print("-->");
+				
 		}
-		System.out.println("Null"+"\n");
+		System.out.println("\n");
 		
 		
 	}
@@ -203,23 +240,19 @@ public class LinkedList {
     }
 	
 	public static void main(String[] args) {
+		
 		System.out.println("OS Type is: "+os);
-		/*Declaring linked list*/
+		
+		/* Declaring linked list preliminary sample elements */
+		String[] initialElem = {"Violet", "Indigo", "Blue", "Green", "Yellow", "Orange", "Red"} ;
+		
+		/* Create empty list */
 		LinkedList ll = new LinkedList();
 		
-		/*Inserting data in LinkedList. head will the last inserted element*/
-		ll.push("Violet"); 
-		ll.push("Indigo");
-		ll.push("Blue");
-		ll.push("Grey");
-		ll.push("Yellow");
-		ll.push("Orange"); 
-		// Linked list is Orange->Yellow->Grey->Blue->Indigo->Violet->Null
-		
-		//ll.printList();
-		//ll.push("Red");
-		//ll.printList();
-		
+		/* Inserting data in LinkedList. head will be the last inserted element */
+		ll.pushAll(initialElem);
+
+		/* Provide Menu feature */
 		ll.casefunction();
 		
 	}
@@ -234,6 +267,7 @@ public class LinkedList {
 	/*Get run time input (integer type) parameter from user*/
 	public int intParam() {
 		Scanner sc = new Scanner(System.in);
+		//TODO entering non int value broke it :(
 		int data = sc.nextInt();
 		return data;
 	}
@@ -254,6 +288,8 @@ public class LinkedList {
 	}
 	
 	public void casefunction() {
+		//TODO - Need more research
+//		clearConsole();
 		
 		int option = displayOptions();
 		switch (option) {
@@ -270,6 +306,28 @@ public class LinkedList {
 					  casefunction();	  
 				
 		}
+	}
+	
+	public final static void clearConsole()
+	{
+	    try
+	    {
+	        final String os = System.getProperty("os.name");
+
+	        if (os.contains("Windows"))
+	        {
+//	        	System.out.print("\033[H\033[2J");
+	        	Runtime.getRuntime().exec("cmd /c cls");
+	        }
+	        else
+	        {
+	            Runtime.getRuntime().exec("clear");
+	        }
+	    }
+	    catch (final Exception e)
+	    {
+	        System.out.println(e);//  Handle any exceptions.
+	    }
 	}
 	
 /*Below are the functions created to maintain flow of application*/	
